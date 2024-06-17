@@ -20,12 +20,13 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.UserConfig;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.ActionBarLayout;
+import org.telegram.ui.ActionBar.INavigationLayout;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.ChatMessageCell;
 import org.telegram.ui.Components.BackgroundGradientDrawable;
 import org.telegram.ui.Components.LayoutHelper;
 
-import tw.nekomimi.nkmr.NekomuraConfig;
+import tw.nekomimi.nekogram.NekoConfig;
 
 @SuppressLint("ViewConstructor")
 public class StickerSizePreviewMessagesCell extends LinearLayout {
@@ -37,9 +38,9 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
     private ChatMessageCell[] cells = new ChatMessageCell[2];
     private MessageObject[] messageObjects = new MessageObject[2];
     private Drawable shadowDrawable;
-    private ActionBarLayout parentLayout;
+    private INavigationLayout parentLayout;
 
-    public StickerSizePreviewMessagesCell(Context context, ActionBarLayout layout) {
+    public StickerSizePreviewMessagesCell(Context context, INavigationLayout layout) {
         super(context);
 
         parentLayout = layout;
@@ -94,7 +95,7 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
 
 
         message = new TLRPC.TL_message();
-        message.message = NekomuraConfig.stickerSize.Float() < 9 ? LocaleController.getString("StickerSizeDialogMessageSmallOne", R.string.StickerSizeDialogMessageSmallOne) : LocaleController.getString("StickerSizeDialogMessageBigOne", R.string.StickerSizeDialogMessageBigOne);
+        message.message = NekoConfig.stickerSize.Float() < 9 ? LocaleController.getString("StickerSizeDialogMessageSmallOne", R.string.StickerSizeDialogMessageSmallOne) : LocaleController.getString("StickerSizeDialogMessageBigOne", R.string.StickerSizeDialogMessageBigOne);
         message.date = date + 1270;
         message.dialog_id = -1;
         message.flags = 259;
@@ -124,7 +125,7 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
         super.invalidate();
         for (int a = 0; a < cells.length; a++) {
             if (a == 1) {
-                messageObjects[a].messageOwner.message = NekomuraConfig.stickerSize.Float() < 9 ? LocaleController.getString("StickerSizeDialogMessageSmallOne", R.string.StickerSizeDialogMessageSmallOne) : LocaleController.getString("StickerSizeDialogMessageBigOne", R.string.StickerSizeDialogMessageBigOne);
+                messageObjects[a].messageOwner.message = NekoConfig.stickerSize.Float() < 9 ? LocaleController.getString("StickerSizeDialogMessageSmallOne", R.string.StickerSizeDialogMessageSmallOne) : LocaleController.getString("StickerSizeDialogMessageBigOne", R.string.StickerSizeDialogMessageBigOne);
                 messageObjects[a].applyNewText();
                 messageObjects[a].resetLayout();
             }

@@ -271,6 +271,7 @@ public class ThemeDescription {
                     Drawable background = viewToInvalidate.getBackground();
                     if (background instanceof MessageBackgroundDrawable) {
                         ((MessageBackgroundDrawable) background).setColor(color);
+                        ((MessageBackgroundDrawable) background).setCustomPaint(null);
                     } else {
                         viewToInvalidate.setBackgroundColor(color);
                     }
@@ -339,9 +340,6 @@ public class ThemeDescription {
             if ((changeFlags & FLAG_AB_SUBMENUBACKGROUND) != 0) {
                 ((ActionBar) viewToInvalidate).setPopupBackgroundColor(color, false);
             }
-        }
-        if (viewToInvalidate instanceof VideoTimelineView) {
-            ((VideoTimelineView) viewToInvalidate).setColor(color);
         }
         if (viewToInvalidate instanceof EmptyTextProgressView) {
             if ((changeFlags & FLAG_TEXTCOLOR) != 0) {
@@ -589,6 +587,7 @@ public class ThemeDescription {
                                     Drawable background = view.getBackground();
                                     if (background instanceof MessageBackgroundDrawable) {
                                         ((MessageBackgroundDrawable) background).setColor(color);
+                                        ((MessageBackgroundDrawable) background).setCustomPaint(null);
                                     } else {
                                         view.setBackgroundColor(color);
                                     }

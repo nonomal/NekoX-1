@@ -19,12 +19,10 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 
-import org.osmdroid.util.GeoPoint;
-
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.DialogObject;
-import org.telegram.messenger.ImageLocation;
+import org.telegram.messenger.IMapsProvider;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LocationController;
 import org.telegram.messenger.MessageObject;
@@ -143,7 +141,7 @@ public class SharingLiveLocationCell extends FrameLayout {
         distanceTextView.setText(address);
     }
 
-    public void setDialog(MessageObject messageObject, Location userLocation) {
+    public void setDialog(MessageObject messageObject, Location userLocation, boolean userLocationDenied) {
         long fromId = messageObject.getFromChatId();
         if (messageObject.isForwarded()) {
             fromId = MessageObject.getPeerId(messageObject.messageOwner.fwd_from.from_id);
@@ -198,8 +196,10 @@ public class SharingLiveLocationCell extends FrameLayout {
         } else {
             if (address != null) {
                 distanceTextView.setText(address);
-            } else {
+            } else if (!userLocationDenied) {
                 distanceTextView.setText(LocaleController.getString("Loading", R.string.Loading));
+            } else {
+                distanceTextView.setText("");
             }
         }
     }
@@ -222,9 +222,9 @@ public class SharingLiveLocationCell extends FrameLayout {
             }
         }
 
-        GeoPoint position = info.marker.getPosition();
-        location.setLatitude(position.getLatitude());
-        location.setLongitude(position.getLongitude());
+        IMapsProvider.LatLng position = info.marker.getPosition();
+        location.setLatitude(position.latitude);
+        location.setLongitude(position.longitude);
 
         String time = LocaleController.formatLocationUpdateDate(info.object.edit_date != 0 ? info.object.edit_date : info.object.date);
         if (userLocation != null) {

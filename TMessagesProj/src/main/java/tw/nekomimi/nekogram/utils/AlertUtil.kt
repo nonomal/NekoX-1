@@ -13,9 +13,9 @@ import org.telegram.tgnet.TLRPC
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.Components.EditTextBoldCursor
 import org.telegram.ui.Components.NumberPicker
-import tw.nekomimi.nekogram.BottomBuilder
-import tw.nekomimi.nekogram.PopupBuilder
-import tw.nekomimi.nkmr.NekomuraConfig
+import tw.nekomimi.nekogram.ui.BottomBuilder
+import tw.nekomimi.nekogram.ui.PopupBuilder
+import tw.nekomimi.nekogram.NekoConfig
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
@@ -144,7 +144,7 @@ object AlertUtil {
     @JvmStatic
     fun showProgress(ctx: Context, text: String = LocaleController.getString("Loading", R.string.Loading)): AlertDialog {
 
-        return AlertDialog.Builder(ctx, 1).apply {
+        return AlertDialog.Builder(ctx, AlertDialog.ALERT_TYPE_MESSAGE).apply {
 
             setMessage(text)
 
@@ -245,14 +245,15 @@ object AlertUtil {
                     LocaleController.getString("ProviderLingocloud", R.string.ProviderLingocloud),
                     LocaleController.getString("ProviderMicrosoftTranslator", R.string.ProviderMicrosoftTranslator),
                     LocaleController.getString("ProviderMicrosoftTranslator", R.string.ProviderYouDao),
-                    LocaleController.getString("ProviderMicrosoftTranslator", R.string.ProviderDeepLTranslate)
+                    LocaleController.getString("ProviderMicrosoftTranslator", R.string.ProviderDeepLTranslate),
+                    LocaleController.getString("ProviderTelegramAPI", R.string.ProviderTelegramAPI)
             ))
 
             popup.setItems(items.toTypedArray()) { item, _ ->
 
                 reference.get().dismiss()
 
-                NekomuraConfig.translationProvider.setConfigInt(item + 1)
+                NekoConfig.translationProvider.setConfigInt(item + 1)
 
                 retryRunnable.run()
 

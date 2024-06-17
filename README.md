@@ -19,64 +19,71 @@ NekoX is an **free and open source** third-party Telegram client, based on Teleg
 
 - Most of Nekogram's features
 - Unlimited login accounts
-- OpenCC Chinese Convert
-- Built-in VMess, Shadowsocks, SSR, Trojan-GFW proxies support (No longer maintained)
-- Built-in public proxy (WebSocket relay via Cloudflare CDN), [documentation and for PC](https://github.com/arm64v8a/NekoXProxy)
-- Proxy subscription support
-- Ipv6 MTProxy support
-- Able to parse all proxy subscription format: SIP008, ssr, v2rayN, vmess1, shit ios app formats, clash config and more
-- Proxies import and export, remarks, speed measurement, sorting, delete unusable nodes, etc
-- Scan the QR code (any link, can add a proxy)
-- The ( vmess / vmess1 / ss / ssr / trojan ) proxy link in the message can be clicked
-- Allow auto-disabling proxy when VPN is enabled
-- Proxy automatic switcher
-- Custom [Emoji packs](https://github.com/NekoX-Dev/NekoX/wiki/emoji)
-- Add stickers without sticker pack
-- Allow disabling vibration
-- Allow clicking on links in self profile
-- Sticker set list backup / restore / share
-- Full InstantView translation support
-- Translation support for selected text on input and in messages
-- Delete all messages in group
-- Dialog sorting is optional "Unread and can be prioritized for reminding" etc
-- Allow to skip "regret within five seconds"
-- Unblock all users support
-- Login via QR code
-- Scan and confirm the login QR code directly
-- Allow clearing app data
-- Option to not send comment first when forwarding
-- Option to use nekox chat input menu: replace record button with a menu which contains an switch to control link preview (enabled by default)
-- Option to disable link preview by default: to prevent the server from knowing that the link is shared through Telegram.
-- Option to ignore Android-only content restrictions (except for the Play Store version).
-- OpenKeychain client (sign / verify / decrypt / import)
-- Google Cloud Translate / Yandex.Translate support
-- Custom cache directory (supports external storage)
-- Custom app ID and Hash (optional NekoX / Android / Android X or Manual input)
-- Custom server (official, test DC)
-- Keep the original file name when downloading files
-- View the data center you belong to when you don't have an avatar
-- Proxies, groups, channels, sticker packs are able to shared as QR codes
-- Force English emoji keywords to be loaded
-- Add "@Name" when long-pressing @user option
-- Enhanced notification service, optional version without Google Services
-- Don't alert "Proxy unavailable" for non-current account
-- Option to block others from starting a secret chat with you
-- Allow creation of group without invite
-- Option to upgrade group to supergroup
-- Mark dialogs as read using tab menu
-- Improved session dialog
-- Improved link long click menu
-- Improved hide messages from blocked users feature
-- Text replacer
-- Persian calendar support
-- Option to disable trending
-- Telegram X style menu for unpinning messages
-- Built-in Material Design themes / Telegram X style icons
-- Enabled set auto delete timer option for private chats and private groups
-- Don't process cleanup draft events after opening chat
-- Support saving multiple selected messages to Saved Messages
-- Support unpinning multiple selected messages
-- View stats option for messages
+- **Proxy**
+    - Built-in VMess, Shadowsocks, SSR, Trojan-GFW proxies support (No longer maintained)
+    - Built-in public proxy (WebSocket relay via Cloudflare CDN), [documentation and for PC](https://github.com/arm64v8a/NekoXProxy)
+    - Proxy subscription support
+    - Ipv6 MTProxy support
+    - Able to parse all proxy subscription format: SIP008, ssr, v2rayN, vmess1, shit ios app formats, clash config and more
+    - Proxies import and export, remarks, speed measurement, sorting, delete unusable nodes, etc
+    - Scan the QR code (any link, can add a proxy)
+    - The ( vmess / vmess1 / ss / ssr / trojan ) proxy link in the message can be clicked
+    - Allow auto-disabling proxy when VPN is enabled
+    - Proxy automatic switcher
+    - Don't alert "Proxy unavailable" for non-current account
+- **Stickers**
+    - Custom [Emoji packs](https://github.com/NekoX-Dev/NekoX/wiki/emoji)
+    - Add stickers without sticker pack
+    - Sticker set list backup / restore / share
+- **Internationalization**
+    - OpenCC Chinese Convert
+    - Full InstantView translation support
+    - Translation support for selected text on input and in messages
+    - Google Cloud Translate / Yandex.Translate support
+    - Force English emoji keywords to be loaded
+    - Persian calendar support
+- **Additional Options**
+    - Option to disable vibration
+    - Dialog sorting is optional "Unread and can be prioritized for reminding" etc
+    - Option to skip "regret within five seconds"
+    - Option to not send comment first when forwarding
+    - Option to use nekox chat input menu: replace record button with a menu which contains an switch to control link preview (enabled by default)
+    - Option to disable link preview by default: to prevent the server from knowing that the link is shared through Telegram.
+    - Option to ignore Android-only content restrictions (except for the Play Store version).
+    - Custom cache directory (supports external storage)
+    - Custom server (official, test DC)
+    - Option to block others from starting a secret chat with you
+    - Option to disable trending
+- **Additional Actions**
+    - Allow clicking on links in self profile
+    - Delete all messages in group
+    - Unblock all users support
+    - Login via QR code
+    - Scan and confirm the login QR code directly
+    - Allow clearing app data
+    - Proxies, groups, channels, sticker packs are able to be shared as QR codes
+    - Add "@Name" when long-pressing @user option
+    - Allow creating a group without inviting anyone
+    - Allow upgrading a group to a supergroup
+    - Mark dialogs as read using tab menu
+    - Enabled set auto delete timer option for private chats and private groups
+    - Support saving multiple selected messages to Saved Messages
+    - Support unpinning multiple selected messages
+    - View stats option for messages
+- **Optimization**
+    - Keep the original file name when downloading files
+    - View the data center you belong to when you don't have an avatar
+    - Enhanced notification service, optional version without Google Services
+    - Improved session dialog
+    - Improved link long click menu
+    - Improved hide messages from blocked users feature
+    - Don't process cleanup draft events after opening chat
+- **Others**
+    - OpenKeychain client (sign / verify / decrypt / import)
+    - Text replacer
+- **UI**
+    - Telegram X style menu for unpinning messages
+    - Built-in Material Design themes / Telegram X style icons
 - And more :)
 
 ## Compilation Guide
@@ -88,18 +95,16 @@ Consider using a Linux VM or dual booting.**
 
 0. Checkout all submodules
 ```
-git submodule init
-git submodule update
+git submodule update --init --recursive
 ```
 
 1. Install Android SDK and NDK (default location is $HOME/Android/SDK, otherwise you need to specify $ANDROID_HOME for it)
 
 It is recommended to use [AndroidStudio](https://developer.android.com/studio) to install.
 
-2. Install golang ( 1.16 ).
+2. Install golang and yasm
 ```shell
-# debian sid
-apt install -y golang-1.16
+apt install -y golang-1.16 yasm
 ```
 
 3. Install Rust and its stdlib for Android ABIs, and add environment variables for it.
@@ -115,24 +120,11 @@ rustup default $(cat ss-rust/src/main/rust/shadowsocks-rust/rust-toolchain)
 rustup target install armv7-linux-androideabi aarch64-linux-android i686-linux-android x86_64-linux-android
 ```
 
-This step can be skipped if you want to build a `mini` release.
-
 4. Build native dependencies: `./run init libs`
-5. Build external libraries and native code: 
-
-For full release:
-
-`./run libs update`
-
-For mini release:
-```
-./run libs v2ray
-./run libs native # libtmessages.so
-```
- 
-9. Fill out `TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH` in `local.properties`
-10. Replace TMessagesProj/google-services.json if you want fcm to work.
-11. Replace release.keystore with yours and fill out `ALIAS_NAME`, `KEYSTORE_PASS` and `ALIAS_PASS` in `local.properties` if you want a custom sign key.
+5. Build external libraries and native code: `./run libs update`
+6. Fill out `TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH` in `local.properties`
+7. Replace TMessagesProj/google-services.json if you want fcm to work.
+8. Replace release.keystore with yours and fill out `ALIAS_NAME`, `KEYSTORE_PASS` and `ALIAS_PASS` in `local.properties` if you want a custom sign key.
 
 `./gradlew assemble<Full/Mini><Debug/Release/ReleaseNoGcm>`
 
